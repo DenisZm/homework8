@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class Application {
     public static void main(String[] args) throws IOException {
-        File file = new File("D:/test-java.txt");
+        File file = new File("C:/Work/test-java.txt");
         HumanDao humanDao = new HumanDao(file);
         HumanService humanService = new HumanService(humanDao);
 

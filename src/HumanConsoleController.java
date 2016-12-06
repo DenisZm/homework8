@@ -17,7 +17,7 @@ public class HumanConsoleController {
             System.out.print("Choose menu item[1-4]: ");
             switch (ConsoleUtils.getIntFromUser(1,4)) {
                 case 1: showPeopleList();break;
-                case 2: showCreateNewHumanManu();break;
+                case 2: showCreateNewHumanMenu();break;
                 case 3: showDeleteHumanMenu();break;
                 case 4: return;
             }
@@ -26,7 +26,7 @@ public class HumanConsoleController {
 
     private void showPeopleList() {
         ConsoleUtils.clearScreen();
-        System.out.println("All people: ");
+        System.out.println("All peoples: ");
         for (Human human : humanService.getAll()) {
             System.out.println(human);
         }
@@ -34,12 +34,12 @@ public class HumanConsoleController {
         ConsoleUtils.waitForEnterKeyPress();
     }
 
-    private void showCreateNewHumanManu() {
+    private void showCreateNewHumanMenu() {
         ConsoleUtils.clearScreen();
 
         System.out.print("Enter name: ");
         String name = ConsoleUtils.getLineFromUser();
-        System.out.print("Enter surname:");
+        System.out.print("Enter surname: ");
         String surname = ConsoleUtils.getLineFromUser();
         System.out.print("Enter age: ");
         int age = ConsoleUtils.getIntFromUser(0, 200);
@@ -52,5 +52,24 @@ public class HumanConsoleController {
 
     private void showDeleteHumanMenu() {
         //TODO: Implement me
+        ConsoleUtils.clearScreen();
+
+        List humanList = humanService.getAll();
+        int maxId = humanList.size();
+
+        for (int i = 0; i < humanList.size(); i++) {
+            System.out.print((i + 1) + ") ");
+            System.out.println(humanList.get(i));
+        }
+
+        System.out.printf("Select people [1 - %d]: ", maxId);
+        int id = ConsoleUtils.getIntFromUser(1, maxId) - 1;
+        Human humanToRemove = (Human) humanList.get(id);
+
+        humanService.delete(humanToRemove);
+        System.out.println("Human " + humanToRemove.getName() + " "
+                                    + humanToRemove.getSurname() + " deleted");
+        System.out.println("Press enter to continue...");
+        ConsoleUtils.waitForEnterKeyPress();
     }
 }
